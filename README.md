@@ -16,4 +16,12 @@ TECNOLOGIAS:
 ~ React
 ~ H2DB
 
-
+FUNCIONALIDADES:
+~ Ver vehiculos en home
+~ Ver detalle de vehiculo
+~ Registrarse e iniciar sesion
+~ Panel de administracion (solo usuarios ADMIN)
+~ Agregar/editar/eliminar vehiculos
+~ Administrar categorias
+~ Administrar caracteristicas
+~ Asignar categoria y caracteristicas a vehiculos

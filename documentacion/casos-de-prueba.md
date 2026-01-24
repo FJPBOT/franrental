@@ -144,3 +144,116 @@ Total de historias: 11
 Pasaron: 11
 Fallaron: 0
 
+SPRINT 2
+
+HISTORIA 12: ASIGNAR CATEGORIAS
+CRITERIO: Asignar categoria a vehiculo desde panel admin
+PRUEBA:
+Ir a /admin/categories
+Crear categoria "SUV Premium"
+Ir a /admin/add
+Crear vehiculo seleccionando la categoria
+Ir a detalle del vehiculo
+Verificar que muestra la categoria
+RESULTADO: Paso
+
+HISTORIA 13: REGISTRAR USUARIO
+CRITERIO: Usuario anonimo puede registrarse
+PRUEBA:
+Ir a /register
+Llenar formulario:
+Nombre: Juan
+Apellido: Perez
+Email: juan@test.com
+Contraseña: 123456
+Click en Crear Cuenta
+Verificar que aparece avatar con iniciales JP
+RESULTADO: Paso
+
+PRUEBA DE VALIDACION:
+Intentar registrarse con email duplicado
+Verificar mensaje "El email ya esta registrado"
+RESULTADO: Paso
+
+HISTORIA 14: IDENTIFICAR USUARIO
+CRITERIO: Usuario puede iniciar sesion
+PRUEBA:
+Cerrar sesion si esta logueado
+Ir a /login
+Ingresar email y contraseña
+Click en Iniciar Sesion
+Verificar que aparece avatar con iniciales
+RESULTADO: Paso
+
+PRUEBA DE VALIDACION:
+Intentar login con contraseña incorrecta
+Verificar mensaje "Email o contraseña incorrectos"
+RESULTADO: Paso
+
+HISTORIA 15: CERRAR SESION
+CRITERIO: Usuario puede cerrar sesion
+PRUEBA:
+Estar logueado
+Click en avatar
+Verificar menu con nombre, email y rol
+Click en "Cerrar Sesion"
+Verificar que vuelven botones "Crear cuenta" e "Iniciar sesion"
+RESULTADO: Paso
+
+HISTORIA 16: IDENTIFICAR ADMINISTRADOR
+CRITERIO: Asignar rol admin a usuario
+PRUEBA:
+Endpoint PUT /api/users/{id}/role?role=ADMIN funciona
+Usuario con rol ADMIN ve "Panel Admin" en menu
+RESULTADO: Paso
+NOTA: No se hizo UI para cambiar roles, se hace por API
+
+HISTORIA 17: ADMINISTRAR CARACTERISTICAS
+CRITERIO: CRUD de caracteristicas desde panel admin
+PRUEBA:
+Ir a /admin/features
+Click "Agregar Nueva Caracteristica"
+Nombre: Air Conditioning
+URL icono: https://ejemplo.com/icon.png
+Click Crear
+Verificar que aparece en lista
+Editar y eliminar
+RESULTADO: Paso
+
+HISTORIA 18: VISUALIZAR CARACTERISTICAS
+CRITERIO: Ver caracteristicas en detalle de vehiculo
+PRUEBA:
+Crear vehiculo con caracteristicas
+Ir al detalle del vehiculo
+Verificar seccion "Caracteristicas"
+Verificar que muestra nombre e icono
+RESULTADO: Paso
+
+HISTORIA 19: CREAR SECCION CATEGORIAS (FILTRADO)
+CRITERIO: Filtrar vehiculos por categoria en el home
+RESULTADO: No Implementado
+RAZON: Se priorizo el CRUD de categorias
+NOTA: Queda pendiente para el futuro
+
+HISTORIA 20: AGREGAR CATEGORIAS
+CRITERIO: CRUD de categorias desde panel admin
+PRUEBA:
+Ir a /admin/categories
+Click "Agregar Nueva Categoria"
+Titulo: SUV Premium
+Descripcion: Vehiculos deportivos utilitarios de lujo
+Click Crear
+Verificar lista con contador de vehiculos
+Editar y eliminar
+RESULTADO: Paso
+
+RESUMEN SPRINT 2
+Total historias: 9
+Implementadas: 8
+No implementadas: 1 (Historia 19)
+Pasaron: 8
+Fallaron: 0
+
+RESUMEN TOTAL
+Sprint 1: 11/11
+Sprint 2: 8/9
