@@ -1,0 +1,55 @@
+.home-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.home-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.home-header h1 {
+  color: #2C3E50;
+  font-size: 36px;
+  margin-bottom: 10px;
+}
+
+.home-header p {
+  color: #7F8C8D;
+  font-size: 18px;
+}
+
+.vehicles-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.loading,
+.error,
+.no-vehicles {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 18px;
+  color: #7F8C8D;
+}
+
+.error {
+  color: #E74C3C;
+}
+
+@media (max-width: 768px) {
+  .vehicles-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .home-header h1 {
+    font-size: 28px;
+  }
+
+  .home-header p {
+    font-size: 16px;
+  }
+}

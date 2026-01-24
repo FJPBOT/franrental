@@ -1,0 +1,235 @@
+.list-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #BDC3C7;
+}
+
+.list-header h1 {
+  color: #2C3E50;
+  font-size: 32px;
+  margin: 0;
+}
+
+.table-container {
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  overflow-x: auto;
+}
+
+.vehicles-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.vehicles-table thead {
+  background-color: #2C3E50;
+  color: #FFFFFF;
+}
+
+.vehicles-table th {
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.vehicles-table tbody tr {
+  border-bottom: 1px solid #ECF0F1;
+  transition: background-color 0.2s;
+}
+
+.vehicles-table tbody tr:hover {
+  background-color: #F8F9FA;
+}
+
+.vehicles-table td {
+  padding: 15px;
+  color: #2C3E50;
+  font-size: 14px;
+}
+
+.category-badge {
+  display: inline-block;
+  background-color: #E74C3C;
+  color: #FFFFFF;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.btn-delete {
+  background-color: #E74C3C;
+  color: #FFFFFF;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-delete:hover {
+  background-color: #C0392B;
+}
+
+.no-vehicles {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.no-vehicles p {
+  color: #7F8C8D;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+}
+
+.modal {
+  background-color: #FFFFFF;
+  padding: 30px;
+  border-radius: 8px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.modal h2 {
+  color: #2C3E50;
+  font-size: 24px;
+  margin-bottom: 15px;
+}
+
+.modal p {
+  color: #7F8C8D;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.vehicle-name-confirm {
+  color: #E74C3C;
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 25px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+}
+
+.btn-danger {
+  background-color: #E74C3C;
+  color: #FFFFFF;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-danger:hover {
+  background-color: #C0392B;
+}
+
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 18px;
+  color: #7F8C8D;
+}
+
+.alert {
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.alert-error {
+  background-color: #FADBD8;
+  color: #C0392B;
+  border-left: 4px solid #E74C3C;
+}
+
+.btn-primary {
+  background-color: #3498DB;
+  color: #FFFFFF;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #2980B9;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: #7F8C8D;
+  border: 2px solid #BDC3C7;
+  padding: 10px 28px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+  border-color: #7F8C8D;
+  color: #2C3E50;
+}
+
+.btn-back {
+  background-color: transparent;
+  color: #3498DB;
+  border: 2px solid #3498DB;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-back:hover {
+  background-color: #3498DB;
+  color: #FFFFFF;
+}
