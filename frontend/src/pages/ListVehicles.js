@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import vehicleService from '../services/vehicleService';
 import './ListVehicles.css';
 
 function ListVehicles() {
+  const navigate = useNavigate();
   const [vehicles, setVehicles] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -19,11 +21,15 @@ function ListVehicles() {
       setVehicles(data);
       setError(null);
     } catch (err) {
-      setError('Error al cargar los vehículos');
+      setError('Error al cargar los vehiculos');
       console.error(err);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleEdit = (id) => {
+    navigate(`/admin/edit/${id}`);
   };
 
   const handleDeleteClick = (vehicle) => {
@@ -36,7 +42,7 @@ function ListVehicles() {
       setVehicles(vehicles.filter(v => v.id !== deleteConfirm.id));
       setDeleteConfirm(null);
     } catch (err) {
-      alert('Error al eliminar el vehículo');
+      alert('Error al eliminar el vehiculo');
       console.error(err);
     }
   };
@@ -46,13 +52,13 @@ function ListVehicles() {
   };
 
   const handleBack = () => {
-    window.location.href = '/admin';
+    navigate('/admin');
   };
 
   if (loading) {
     return (
       <div className="list-container">
-        <div className="loading">Cargando vehículos...</div>
+        <div className="loading">Cargando vehiculos...</div>
       </div>
     );
   }
@@ -60,7 +66,7 @@ function ListVehicles() {
   return (
     <div className="list-container">
       <div className="list-header">
-        <h1>Lista de Vehículos</h1>
+        <h1>Lista de Vehiculos</h1>
         <button onClick={handleBack} className="btn-back">← Volver</button>
       </div>
 
@@ -70,9 +76,9 @@ function ListVehicles() {
 
       {vehicles.length === 0 ? (
         <div className="no-vehicles">
-          <p>No hay vehículos registrados</p>
-          <button onClick={() => window.location.href = '/admin/add'} className="btn-primary">
-            Agregar Primer Vehículo
+          <p>No hay vehiculos registrados</p>
+          <button onClick={() => navigate('/admin/add')} className="btn-primary">
+            Agregar Primer Vehiculo
           </button>
         </div>
       ) : (
@@ -82,7 +88,7 @@ function ListVehicles() {
               <tr>
                 <th>ID</th>
                 <th>Nombre</th>
-                <th>Categoría</th>
+                <th>Categoria</th>
                 <th>Acciones</th>
               </tr>
             </thead>
@@ -92,15 +98,27 @@ function ListVehicles() {
                   <td>{vehicle.id}</td>
                   <td>{vehicle.name}</td>
                   <td>
-                    <span className="category-badge">{vehicle.category}</span>
+                    {vehicle.categoryTitle ? (
+                      <span className="category-badge">{vehicle.categoryTitle}</span>
+                    ) : (
+                      <span className="no-category">Sin categoria</span>
+                    )}
                   </td>
                   <td>
-                    <button 
-                      onClick={() => handleDeleteClick(vehicle)} 
-                      className="btn-delete"
-                    >
-                      Eliminar
-                    </button>
+                    <div className="action-buttons">
+                      <button 
+                        onClick={() => handleEdit(vehicle.id)} 
+                        className="btn-edit"
+                      >
+                        Editar
+                      </button>
+                      <button 
+                        onClick={() => handleDeleteClick(vehicle)} 
+                        className="btn-delete"
+                      >
+                        Eliminar
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -112,8 +130,8 @@ function ListVehicles() {
       {deleteConfirm && (
         <div className="modal-overlay">
           <div className="modal">
-            <h2>Confirmar Eliminación</h2>
-            <p>¿Estás seguro de que deseas eliminar el vehículo:</p>
+            <h2>Confirmar Eliminacion</h2>
+            <p>Estas seguro de que deseas eliminar el vehiculo:</p>
             <p className="vehicle-name-confirm">{deleteConfirm.name}</p>
             <div className="modal-actions">
               <button onClick={handleDeleteCancel} className="btn-secondary">

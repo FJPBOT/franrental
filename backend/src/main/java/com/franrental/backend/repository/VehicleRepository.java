@@ -13,6 +13,8 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
 
     Optional<Vehicle> findByName(String name);
 
+    boolean existsByName(String name);
+
     @Query(value = "SELECT * FROM vehicles ORDER BY RAND() LIMIT ?1", nativeQuery = true)
     List<Vehicle> findRandomVehicles(int limit);
 

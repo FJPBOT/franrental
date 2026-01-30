@@ -4,8 +4,8 @@ const API_URL = 'http://localhost:8080/api/vehicles';
 
 const vehicleService = {
   getAll: async () => {
-    const response = await axios.get(API_URL);
-    return response.data;
+    const response = await axios.get(`${API_URL}?page=0&size=1000`);
+    return response.data.content;
   },
 
   getById: async (id) => {
@@ -19,7 +19,7 @@ const vehicleService = {
   },
 
   getPaginated: async (page = 0, size = 10) => {
-    const response = await axios.get(`${API_URL}/paginated?page=${page}&size=${size}`);
+    const response = await axios.get(`${API_URL}?page=${page}&size=${size}`);
     return response.data;
   },
 

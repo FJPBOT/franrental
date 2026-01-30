@@ -35,9 +35,9 @@ public class Vehicle {
 
     @ManyToMany
     @JoinTable(
-            name = "vehicle_features",
-            joinColumns = @JoinColumn(name = "vehicle_id"),
-            inverseJoinColumns = @JoinColumn(name = "feature_id")
+        name = "vehicle_features",
+        joinColumns = @JoinColumn(name = "vehicle_id"),
+        inverseJoinColumns = @JoinColumn(name = "feature_id")
     )
     private List<Feature> features = new ArrayList<>();
 }

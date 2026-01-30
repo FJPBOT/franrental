@@ -31,6 +31,7 @@ FUNCIONALIDADES
 ~ Ver detalle de un vehiculo
 ~ Panel de administracion
 ~ Agregar vehiculo nuevo
+~ Editar vehiculo
 ~ Eliminar vehiculo
 ~ Validaciones de formularios
 ~ Registro e inicio de sesion de usuarios
@@ -41,6 +42,13 @@ FUNCIONALIDADES
 ~ Asignar categoria a vehiculos
 ~ Asignar caracteristicas a vehiculos
 ~ Ver caracteristicas en detalle de vehiculo
+~ Buscador de vehiculos por nombre
+~ Filtrar vehiculos por categoria
+~ Paginacion de resultados (10 por pagina)
+~ Sistema de reservaciones
+~ Pagina de mis reservas
+~ Panel admin para gestionar reservas
+~ Administrar roles de usuarios
 
 PROBLEMAS ENCONTRADOS
 ~ Al principio tuve problemas con CORS entre React y Spring Boot. Lo solucione con @CrossOrigin.
@@ -59,3 +67,71 @@ TIEMPO INVERTIDO
 ~ Frontend Sprint 2: 8 horas (usando herramientas de IA en algunos casos)
 ~ Total: 50 horas
 
+SPRINT 3
+
+NUEVAS FUNCIONALIDADES
+
+A. Favoritos
+~ Boton de corazon en cada vehiculo
+~ Agregar y quitar de favoritos
+~ Pagina de favoritos con todos los vehiculos guardados
+
+B. Reseñas y Puntuaciones
+~ Sistema de puntuacion de 1 a 5 estrellas
+~ Dejar comentarios en vehiculos
+~ Ver promedio de puntuacion
+~ Contador de reseñas
+
+C. Politicas del Vehiculo
+~ Seccion de politicas en detalle
+~ Que incluye el alquiler
+~ Que no incluye
+~ Requisitos para alquilar
+~ Politicas de cancelacion
+
+D. Compartir
+~ Boton para compartir vehiculo
+~ Copia URL al portapapeles
+
+E. Reservaciones
+~ Calendario para seleccionar fechas
+~ Fechas ocupadas bloqueadas
+~ Calculo automatico de precio
+~ Pagina mis reservas para ver historial
+~ Panel admin para gestionar todas las reservas
+
+F. Busqueda y Filtros
+~ Buscador por nombre y descripcion
+~ Filtro por categoria con contador de vehiculos
+~ Paginacion de 10 vehiculos por pagina
+
+G. Administracion de Usuarios
+~ Listado de usuarios registrados
+~ Cambiar rol de USER a ADMIN y viceversa
+
+DECISIONES TECNICAS
+
+A. Backend
+~ Entidad Favorite con relacion User-Vehicle
+~ FavoriteRepository con metodo deleteByUserIdAndVehicleId
+~ Entidad Reservation con validacion de fechas y conflictos
+~ Entidad Review con rating de 1 a 5
+~ Precio fijo de $50 USD por dia de alquiler
+
+B. Frontend
+~ Politicas hardcodeadas en el frontend (no en BD)
+~ react-datepicker para el calendario de reservas
+~ Paginacion en el home con botones de navegacion
+
+PROBLEMAS ENCONTRADOS
+
+~ Tuve que hacer publico el metodo toResponseDTO en VehicleService para que FavoriteService lo use
+~ No implemente el calendario ni la integracion real con redes
+
+TIEMPO INVERTIDO
+
+~ Backend Sprint 3: 7 horas
+~ Frontend Sprint 3: 12 horas
+~ Integracion y pruebas: 5 horas
+~ Total Sprint 3: 24 horas
+~ Total proyecto: 82 horas

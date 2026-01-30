@@ -136,3 +136,37 @@
 .link:hover {
   text-decoration: underline;
 }
+
+.input-error {
+  border-color: #E74C3C !important;
+  background-color: #FADBD8;
+}
+
+.error-message {
+  display: block;
+  color: #E74C3C;
+  font-size: 12px;
+  margin-top: 5px;
+  font-weight: 500;
+}
+
+.field-hint {
+  display: block;
+  color: #7F8C8D;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: #3498DB;
+  cursor: pointer;
+  text-decoration: underline;
+  font-size: inherit;
+  padding: 0;
+}
+
+.link-button:hover {
+  color: #2980B9;
+}

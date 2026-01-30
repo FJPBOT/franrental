@@ -6,50 +6,251 @@
 
 .home-header {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
 .home-header h1 {
   color: #2C3E50;
-  font-size: 36px;
+  font-size: 32px;
   margin-bottom: 10px;
 }
 
 .home-header p {
   color: #7F8C8D;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .vehicles-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 30px;
-  margin-bottom: 40px;
 }
 
-.loading,
-.error,
-.no-vehicles {
-  text-align: center;
-  padding: 60px 20px;
-  font-size: 18px;
-  color: #7F8C8D;
+.search-section {
+  margin-bottom: 20px;
 }
 
-.error {
+.search-container {
+  position: relative;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.search-input {
+  width: 100%;
+  padding: 15px 50px 15px 20px;
+  border: 2px solid #BDC3C7;
+  border-radius: 30px;
+  font-size: 16px;
+  color: #2C3E50;
+  background-color: #FFFFFF;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  box-sizing: border-box;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #3498DB;
+  box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
+}
+
+.search-input::placeholder {
+  color: #95A5A6;
+}
+
+.search-clear {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #95A5A6;
+  cursor: pointer;
+  padding: 5px 10px;
+  line-height: 1;
+  transition: color 0.3s;
+}
+
+.search-clear:hover {
   color: #E74C3C;
 }
 
+.filters-section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.filter-group label {
+  color: #2C3E50;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.category-select {
+  padding: 10px 15px;
+  border: 2px solid #BDC3C7;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #2C3E50;
+  background-color: #FFFFFF;
+  cursor: pointer;
+  transition: border-color 0.3s;
+  min-width: 200px;
+}
+
+.category-select:focus {
+  outline: none;
+  border-color: #3498DB;
+}
+
+.results-count {
+  color: #7F8C8D;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.no-vehicles {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.no-vehicles p {
+  color: #7F8C8D;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.btn-primary {
+  background-color: #3498DB;
+  color: #FFFFFF;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #2980B9;
+}
+
+.pagination-section {
+  margin-top: 40px;
+  padding: 20px 0;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.pagination-btn {
+  background-color: #FFFFFF;
+  color: #2C3E50;
+  border: 2px solid #BDC3C7;
+  padding: 10px 16px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  min-width: 44px;
+}
+
+.pagination-btn:hover:not(:disabled) {
+  background-color: #3498DB;
+  border-color: #3498DB;
+  color: #FFFFFF;
+}
+
+.pagination-btn:disabled {
+  background-color: #ECF0F1;
+  color: #BDC3C7;
+  border-color: #ECF0F1;
+  cursor: not-allowed;
+}
+
+.pagination-info {
+  padding: 10px 20px;
+  background-color: #3498DB;
+  color: #FFFFFF;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
 @media (max-width: 768px) {
+  .home-header h1 {
+    font-size: 24px;
+  }
+
   .vehicles-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
 
-  .home-header h1 {
-    font-size: 28px;
+  .search-container {
+    max-width: 100%;
   }
 
-  .home-header p {
-    font-size: 16px;
+  .search-input {
+    padding: 12px 45px 12px 15px;
+    font-size: 14px;
+  }
+
+  .filters-section {
+    flex-direction: column;
+    gap: 15px;
+    align-items: stretch;
+  }
+
+  .filter-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .category-select {
+    width: 100%;
+  }
+
+  .results-count {
+    text-align: center;
+  }
+
+  .pagination-container {
+    flex-wrap: wrap;
+  }
+
+  .pagination-btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    min-width: 40px;
+  }
+
+  .pagination-info {
+    padding: 8px 16px;
+    font-size: 13px;
+    order: -1;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
   }
 }

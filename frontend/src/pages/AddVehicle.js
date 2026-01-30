@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import vehicleService from '../services/vehicleService';
 import categoryService from '../services/categoryService';
 import featureService from '../services/featureService';
 import './AddVehicle.css';
 
 function AddVehicle() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     description: '',
@@ -17,6 +19,8 @@ function AddVehicle() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
+  const [validationErrors, setValidationErrors] = useState({});
+  const [touched, setTouched] = useState({});
 
   useEffect(() => {
     loadCategoriesAndFeatures();
@@ -35,11 +39,79 @@ function AddVehicle() {
     }
   };
 
+  const validateField = (name, value) => {
+    let error = '';
+
+    switch (name) {
+      case 'name':
+        if (!value.trim()) {
+          error = 'El nombre es obligatorio';
+        } else if (value.trim().length < 3) {
+          error = 'El nombre debe tener al menos 3 caracteres';
+        } else if (value.length > 100) {
+          error = 'El nombre no puede superar los 100 caracteres';
+        }
+        break;
+
+      case 'description':
+        if (!value.trim()) {
+          error = 'La descripcion es obligatoria';
+        } else if (value.trim().length < 10) {
+          error = 'La descripcion debe tener al menos 10 caracteres';
+        } else if (value.length > 1000) {
+          error = 'La descripcion no puede superar los 1000 caracteres';
+        }
+        break;
+
+      case 'image':
+        if (!value.trim()) {
+          error = 'La imagen es obligatoria';
+        } else {
+          try {
+            new URL(value);
+            if (!value.match(/\.(jpg|jpeg|png|gif|webp)(\?.*)?$/i)) {
+              error = 'La URL debe apuntar a una imagen valida (jpg, png, gif, webp)';
+            }
+          } catch {
+            error = 'Debe ser una URL valida';
+          }
+        }
+        break;
+
+      default:
+        break;
+    }
+
+    return error;
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
       ...formData,
       [name]: value
+    });
+
+    if (touched[name]) {
+      const error = validateField(name, value);
+      setValidationErrors({
+        ...validationErrors,
+        [name]: error
+      });
+    }
+  };
+
+  const handleBlur = (e) => {
+    const { name, value } = e.target;
+    setTouched({
+      ...touched,
+      [name]: true
+    });
+
+    const error = validateField(name, value);
+    setValidationErrors({
+      ...validationErrors,
+      [name]: error
     });
   };
 
@@ -58,8 +130,30 @@ function AddVehicle() {
     }
   };
 
+  const validateForm = () => {
+    const errors = {};
+    errors.name = validateField('name', formData.name);
+    errors.description = validateField('description', formData.description);
+    errors.image = validateField('image', formData.image);
+
+    setValidationErrors(errors);
+    setTouched({
+      name: true,
+      description: true,
+      image: true
+    });
+
+    return !errors.name && !errors.description && !errors.image;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      setError('Por favor corrige los errores antes de continuar');
+      return;
+    }
+
     setLoading(true);
     setError(null);
     setSuccess(false);
@@ -78,8 +172,10 @@ function AddVehicle() {
         image: '',
         featureIds: []
       });
+      setValidationErrors({});
+      setTouched({});
       setTimeout(() => {
-        window.location.href = '/admin/list';
+        navigate('/admin/list');
       }, 2000);
     } catch (err) {
       if (err.response && err.response.status === 409) {
@@ -95,14 +191,14 @@ function AddVehicle() {
   };
 
   const handleBack = () => {
-    window.location.href = '/admin';
+    navigate('/admin');
   };
 
   return (
     <div className="add-vehicle-container">
       <div className="add-vehicle-header">
         <h1>Agregar Vehiculo</h1>
-        <button onClick={handleBack} className="btn-back">← Volver</button>
+        <button onClick={handleBack} className="btn-back">Volver</button>
       </div>
 
       <form onSubmit={handleSubmit} className="add-vehicle-form">
@@ -114,10 +210,14 @@ function AddVehicle() {
             name="name"
             value={formData.name}
             onChange={handleChange}
+            onBlur={handleBlur}
             placeholder="Ej: Toyota Corolla 2023"
-            required
-            maxLength="100"
+            className={validationErrors.name && touched.name ? 'input-error' : ''}
           />
+          {validationErrors.name && touched.name && (
+            <span className="error-message">{validationErrors.name}</span>
+          )}
+          <small className="field-hint">Minimo 3 caracteres, maximo 100</small>
         </div>
 
         <div className="form-group">
@@ -127,11 +227,15 @@ function AddVehicle() {
             name="description"
             value={formData.description}
             onChange={handleChange}
+            onBlur={handleBlur}
             placeholder="Describe las caracteristicas del vehiculo..."
-            required
-            maxLength="1000"
             rows="5"
+            className={validationErrors.description && touched.description ? 'input-error' : ''}
           />
+          {validationErrors.description && touched.description && (
+            <span className="error-message">{validationErrors.description}</span>
+          )}
+          <small className="field-hint">Minimo 10 caracteres, maximo 1000</small>
         </div>
 
         <div className="form-group">
@@ -150,15 +254,21 @@ function AddVehicle() {
         </div>
 
         <div className="form-group">
-          <label htmlFor="image">URL de la Imagen</label>
+          <label htmlFor="image">URL de la Imagen *</label>
           <input
             type="url"
             id="image"
             name="image"
             value={formData.image}
             onChange={handleChange}
+            onBlur={handleBlur}
             placeholder="https://ejemplo.com/imagen.jpg"
+            className={validationErrors.image && touched.image ? 'input-error' : ''}
           />
+          {validationErrors.image && touched.image && (
+            <span className="error-message">{validationErrors.image}</span>
+          )}
+          <small className="field-hint">Debe ser una URL valida de imagen</small>
         </div>
 
         <div className="form-group">

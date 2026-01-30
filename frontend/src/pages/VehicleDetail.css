@@ -146,3 +146,282 @@
   font-size: 14px;
   font-weight: 500;
 }
+
+.detail-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-share,
+.btn-favorite {
+  background-color: #3498DB;
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-share:hover,
+.btn-favorite:hover {
+  background-color: #2980B9;
+}
+
+.rating-summary {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+  padding: 15px;
+  background-color: #F8F9FA;
+  border-radius: 5px;
+}
+
+.stars {
+  display: flex;
+  gap: 5px;
+}
+
+.star {
+  font-size: 24px;
+  color: #BDC3C7;
+}
+
+.star.filled {
+  color: #F39C12;
+}
+
+.star.clickable {
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.star.clickable:hover {
+  transform: scale(1.2);
+}
+
+.rating-text {
+  color: #2C3E50;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.policies-section {
+  margin-top: 40px;
+  padding: 30px;
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.policies-section h2 {
+  color: #2C3E50;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.policies-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.policy-item {
+  padding: 20px;
+  border: 1px solid #ECF0F1;
+  border-radius: 5px;
+}
+
+.policy-item h3 {
+  color: #2C3E50;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.policy-item ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.policy-item li {
+  color: #7F8C8D;
+  font-size: 14px;
+  padding: 8px 0;
+  border-bottom: 1px solid #ECF0F1;
+}
+
+.policy-item li:last-child {
+  border-bottom: none;
+}
+
+.reviews-section {
+  margin-top: 40px;
+  padding: 30px;
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.reviews-section h2 {
+  color: #2C3E50;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.review-form {
+  padding: 20px;
+  background-color: #F8F9FA;
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+.review-form h3 {
+  color: #2C3E50;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.star-rating {
+  display: flex;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  color: #2C3E50;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #BDC3C7;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.form-group textarea:focus {
+  outline: none;
+  border-color: #3498DB;
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.no-reviews {
+  text-align: center;
+  color: #7F8C8D;
+  font-size: 16px;
+  padding: 30px;
+}
+
+.review-item {
+  padding: 20px;
+  border: 1px solid #ECF0F1;
+  border-radius: 5px;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.review-user {
+  color: #2C3E50;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.review-stars {
+  display: flex;
+  gap: 3px;
+}
+
+.review-stars .star {
+  font-size: 16px;
+}
+
+.review-comment {
+  color: #7F8C8D;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 10px 0;
+}
+
+.review-date {
+  color: #95A5A6;
+  font-size: 12px;
+}
+
+.btn-primary {
+  background-color: #3498DB;
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #2980B9;
+}
+
+.btn-primary:disabled {
+  background-color: #BDC3C7;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .policies-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .detail-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .btn-share,
+  .btn-favorite,
+  .btn-back {
+    width: 100%;
+  }
+
+  .btn-reserve-now {
+  background-color: #27AE60;
+  color: #FFFFFF;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-reserve-now:hover {
+  background-color: #229954;
+}
+}

@@ -1,0 +1,57 @@
+.favorites-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.favorites-container h1 {
+  color: #2C3E50;
+  font-size: 32px;
+  margin-bottom: 30px;
+}
+
+.favorites-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+}
+
+.no-favorites {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.no-favorites p {
+  color: #7F8C8D;
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+.btn-primary {
+  background-color: #3498DB;
+  color: #FFFFFF;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #2980B9;
+}
+
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 18px;
+  color: #7F8C8D;
+}
+
+@media (max-width: 768px) {
+  .favorites-grid {
+    grid-template-columns: 1fr;
+  }
+}

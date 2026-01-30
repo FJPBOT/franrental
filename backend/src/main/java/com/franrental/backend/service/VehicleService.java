@@ -2,7 +2,6 @@ package com.franrental.backend.service;
 
 import com.franrental.backend.dto.CreateVehicleDTO;
 import com.franrental.backend.dto.FeatureResponseDTO;
-import com.franrental.backend.dto.UpdateVehicleDTO;
 import com.franrental.backend.dto.VehicleResponseDTO;
 import com.franrental.backend.model.Category;
 import com.franrental.backend.model.Feature;
@@ -11,13 +10,12 @@ import com.franrental.backend.repository.CategoryRepository;
 import com.franrental.backend.repository.FeatureRepository;
 import com.franrental.backend.repository.VehicleRepository;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,8 +33,8 @@ public class VehicleService {
     }
 
     public VehicleResponseDTO create(CreateVehicleDTO dto) {
-        if (vehicleRepository.findByName(dto.getName()).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Vehicle name already exists");
+        if (vehicleRepository.existsByName(dto.getName())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Vehicle with this name already exists");
         }
 
         Vehicle vehicle = new Vehicle();
@@ -59,10 +57,8 @@ public class VehicleService {
         return toResponseDTO(saved);
     }
 
-    public List<VehicleResponseDTO> findAll() {
-        return vehicleRepository.findAll().stream()
-                .map(this::toResponseDTO)
-                .collect(Collectors.toList());
+    public Page<VehicleResponseDTO> findAll(Pageable pageable) {
+        return vehicleRepository.findAll(pageable).map(this::toResponseDTO);
     }
 
     public VehicleResponseDTO findById(Long id) {
@@ -71,54 +67,31 @@ public class VehicleService {
         return toResponseDTO(vehicle);
     }
 
-    public List<VehicleResponseDTO> findRandom(int limit) {
-        return vehicleRepository.findRandomVehicles(limit).stream()
-                .map(this::toResponseDTO)
-                .collect(Collectors.toList());
-    }
-
-    public Page<VehicleResponseDTO> findAllPaginated(int page, int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        return vehicleRepository.findAll(pageable).map(this::toResponseDTO);
-    }
-
-    public List<VehicleResponseDTO> findByCategory(Long categoryId) {
-        Category category = categoryRepository.findById(categoryId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
-
-        return category.getVehicles().stream()
-                .map(this::toResponseDTO)
-                .collect(Collectors.toList());
-    }
-
-    public VehicleResponseDTO update(Long id, UpdateVehicleDTO dto) {
+    public VehicleResponseDTO update(Long id, CreateVehicleDTO dto) {
         Vehicle vehicle = vehicleRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vehicle not found"));
 
-        if (dto.getName() != null && !dto.getName().equals(vehicle.getName())) {
-            if (vehicleRepository.findByName(dto.getName()).isPresent()) {
-                throw new ResponseStatusException(HttpStatus.CONFLICT, "Vehicle name already exists");
-            }
-            vehicle.setName(dto.getName());
+        if (!vehicle.getName().equals(dto.getName()) && vehicleRepository.existsByName(dto.getName())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Vehicle with this name already exists");
         }
 
-        if (dto.getDescription() != null) {
-            vehicle.setDescription(dto.getDescription());
-        }
+        vehicle.setName(dto.getName());
+        vehicle.setDescription(dto.getDescription());
+        vehicle.setImage(dto.getImage());
 
         if (dto.getCategoryId() != null) {
             Category category = categoryRepository.findById(dto.getCategoryId())
                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
             vehicle.setCategory(category);
+        } else {
+            vehicle.setCategory(null);
         }
 
-        if (dto.getImage() != null) {
-            vehicle.setImage(dto.getImage());
-        }
-
-        if (dto.getFeatureIds() != null) {
+        if (dto.getFeatureIds() != null && !dto.getFeatureIds().isEmpty()) {
             List<Feature> features = featureRepository.findAllById(dto.getFeatureIds());
             vehicle.setFeatures(features);
+        } else {
+            vehicle.setFeatures(Collections.emptyList());
         }
 
         Vehicle updated = vehicleRepository.save(vehicle);
@@ -132,7 +105,16 @@ public class VehicleService {
         vehicleRepository.deleteById(id);
     }
 
-    private VehicleResponseDTO toResponseDTO(Vehicle vehicle) {
+    public List<VehicleResponseDTO> getRandom(int count) {
+        List<Vehicle> allVehicles = vehicleRepository.findAll();
+        Collections.shuffle(allVehicles);
+        return allVehicles.stream()
+                .limit(count)
+                .map(this::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    public VehicleResponseDTO toResponseDTO(Vehicle vehicle) {
         VehicleResponseDTO dto = new VehicleResponseDTO();
         dto.setId(vehicle.getId());
         dto.setName(vehicle.getName());
@@ -144,10 +126,18 @@ public class VehicleService {
             dto.setCategoryTitle(vehicle.getCategory().getTitle());
         }
 
-        List<FeatureResponseDTO> featureDTOs = vehicle.getFeatures().stream()
-                .map(f -> new FeatureResponseDTO(f.getId(), f.getName(), f.getIconUrl()))
-                .collect(Collectors.toList());
-        dto.setFeatures(featureDTOs);
+        if (vehicle.getFeatures() != null) {
+            List<FeatureResponseDTO> featureDTOs = vehicle.getFeatures().stream()
+                    .map(feature -> {
+                        FeatureResponseDTO featureDTO = new FeatureResponseDTO();
+                        featureDTO.setId(feature.getId());
+                        featureDTO.setName(feature.getName());
+                        featureDTO.setIconUrl(feature.getIconUrl());
+                        return featureDTO;
+                    })
+                    .collect(Collectors.toList());
+            dto.setFeatures(featureDTOs);
+        }
 
         return dto;
     }

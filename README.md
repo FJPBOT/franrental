@@ -2,26 +2,56 @@ NOMBRE: FranRental
 AUTOR: Francisco J. Prieto
 
 DESCRIPCION:
-Sistema de alquiler de autos con SpringBoot y React
+Sistema de alquiler de vehículos desarrollado con Spring Boot y React.
 
+REQUISITOS:
+~ Java 17+
+~ Node.js 16+
+~ npm
 
 EJECUTAR:
-/Backend > ./mvnw spring-boot:run
-/Frontend > npm install && npm start
+
+Backend:
+cd backend
+./mvnw spring-boot:run
+
+Frontend:
+cd frontend
+npm install
+npm start
+
 BROWSER: http://localhost:3000
+
+CREDENCIALES DE PRUEBA:
+~ Admin: admin@franrental.com / Admin123! (rol ADMIN)
+~ Usuario: juan@example.com / password123 (rol USER)
 
 TECNOLOGIAS:
 ~ Java 17
-~ SpringBoot
+~ Spring Boot
 ~ React
-~ H2DB
+~ H2 Database
+~ Axios
+~ Bootstrap (estrellas de puntuacion)
 
 FUNCIONALIDADES:
-~ Ver vehiculos en home
-~ Ver detalle de vehiculo
+
+Usuario:
+~ Ver catalogo de vehiculos con paginacion
+~ Buscar vehiculos por nombre o descripcion
+~ Filtrar por categoria
+~ Ver detalle con caracteristicas y politicas
 ~ Registrarse e iniciar sesion
-~ Panel de administracion (solo usuarios ADMIN)
-~ Agregar/editar/eliminar vehiculos
-~ Administrar categorias
-~ Administrar caracteristicas
-~ Asignar categoria y caracteristicas a vehiculos
+~ Agregar vehiculos a favoritos
+~ Hacer reservaciones
+~ Ver mis reservas
+~ Dejar resenias con puntuacion de estrellas
+~ Compartir vehiculo (copiar link)
+
+Administrador:
+~ Panel de administracion
+~ CRUD de vehiculos
+~ CRUD de categorias
+~ CRUD de caracteristicas
+~ Gestionar reservaciones
+~ Gestionar roles de usuarios

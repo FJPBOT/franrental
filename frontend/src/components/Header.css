@@ -71,3 +71,37 @@
   background-color: #FFFFFF;
   color: #2C3E50;
 }
+
+.btn-favorites {
+  background-color: transparent;
+  color: #FFFFFF;
+  border: 2px solid #E74C3C;
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-favorites:hover {
+  background-color: #E74C3C;
+  color: #FFFFFF;
+}
+
+.btn-reservations {
+  background-color: transparent;
+  color: #FFFFFF;
+  border: 2px solid #27AE60;
+  padding: 8px 16px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-reservations:hover {
+  background-color: #27AE60;
+  color: #FFFFFF;
+}

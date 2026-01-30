@@ -93,11 +93,13 @@ HISTORIA 8: PAGINACION
 CRITERIO: Resultados limitados a 10 por pagina
 PRUEBA:
 
-Backend tiene endpoint /api/vehicles/paginated
-Probar: http://localhost:8080/api/vehicles/paginated?page=0&size=10
+Abrir http://localhost:3000
+Verificar que muestra maximo 10 vehiculos
+Verificar botones de paginacion abajo
+Click en siguiente pagina
+Verificar que cambian los vehiculos
 
-RESULTADO: Implementado en backend
-NOTA: No se uso en el frontend porque con los 30 vehiculos de ejemplo no hacia falta
+RESULTADO: Paso
 
 HISTORIA 9: PANEL DE ADMINISTRACION
 CRITERIO: URL /administracion con menu de funciones
@@ -203,10 +205,13 @@ RESULTADO: Paso
 HISTORIA 16: IDENTIFICAR ADMINISTRADOR
 CRITERIO: Asignar rol admin a usuario
 PRUEBA:
-Endpoint PUT /api/users/{id}/role?role=ADMIN funciona
-Usuario con rol ADMIN ve "Panel Admin" en menu
+Ir a /admin/users
+Verificar lista de usuarios con rol actual
+Click en "Hacer Admin" en un usuario USER
+Verificar que cambia a ADMIN
+Click en "Quitar Admin"
+Verificar que vuelve a USER
 RESULTADO: Paso
-NOTA: No se hizo UI para cambiar roles, se hace por API
 
 HISTORIA 17: ADMINISTRAR CARACTERISTICAS
 CRITERIO: CRUD de caracteristicas desde panel admin
@@ -231,9 +236,15 @@ RESULTADO: Paso
 
 HISTORIA 19: CREAR SECCION CATEGORIAS (FILTRADO)
 CRITERIO: Filtrar vehiculos por categoria en el home
-RESULTADO: No Implementado
-RAZON: Se priorizo el CRUD de categorias
-NOTA: Queda pendiente para el futuro
+PRUEBA:
+Abrir http://localhost:3000
+Verificar dropdown de categorias
+Seleccionar una categoria (ej: SUV)
+Verificar que solo muestra vehiculos de esa categoria
+Verificar contador de vehiculos por categoria
+Click en "Todas las categorias"
+Verificar que vuelve a mostrar todos
+RESULTADO: Paso
 
 HISTORIA 20: AGREGAR CATEGORIAS
 CRITERIO: CRUD de categorias desde panel admin
@@ -249,11 +260,108 @@ RESULTADO: Paso
 
 RESUMEN SPRINT 2
 Total historias: 9
+Implementadas: 9
+Pasaron: 9
+Fallaron: 0
+
+RESUMEN TOTAL
+Sprint 1: 11/11
+Sprint 2: 9/9
+
+SPRINT 3
+
+HISTORIA 22: BUSQUEDA DE PRODUCTOS
+CRITERIO: Buscar vehiculos por nombre o descripcion
+PRUEBA:
+Abrir http://localhost:3000
+Escribir "Toyota" en el buscador
+Verificar que filtra y muestra solo vehiculos con Toyota
+Borrar busqueda con boton X
+Verificar que vuelven todos los vehiculos
+RESULTADO: Paso
+NOTA: No se implemento calendario doble ni autocompletado de sugerencias
+
+HISTORIA 23: VISUALIZAR DISPONIBILIDAD
+CRITERIO: Ver fechas disponibles del vehiculo
+PRUEBA:
+Ir a detalle de un vehiculo
+Click en "Reservar Ahora"
+Verificar calendario con fechas
+Verificar que fechas ocupadas estan bloqueadas
+RESULTADO: Paso
+NOTA: El calendario esta en la pagina de reserva, no en el detalle del vehiculo
+
+HISTORIA 24: MARCAR COMO FAVORITO
+CRITERIO: Usuario puede agregar vehiculos a favoritos
+PRUEBA:
+Iniciar sesion
+En el home ver boton de corazon en cada vehiculo
+Click en corazon blanco
+Verificar que cambia a corazon rojo
+Recargar pagina
+Verificar que sigue en rojo
+RESULTADO: Paso
+
+
+HISTORIA 25: LISTA DE FAVORITOS
+CRITERIO: Ver todos los vehiculos favoritos
+PRUEBA:
+Agregar 3 vehiculos a favoritos
+Click en boton "Favoritos" del header
+Verificar que muestra los 3 vehiculos
+Click en corazon rojo para quitar uno
+Verificar que desaparece de la lista
+RESULTADO: Paso
+
+HISTORIA 26: BLOQUE DE POLITICAS
+CRITERIO: Ver politicas en detalle de vehiculo
+PRUEBA:
+Entrar a detalle de cualquier vehiculo
+Scroll hacia abajo
+Verificar seccion "Politicas del Vehiculo"
+Verificar 4 bloques:
+- Que incluye
+- Que no incluye
+- Requisitos
+- Cancelacion
+RESULTADO: Paso
+
+HISTORIA 27: COMPARTIR EN REDES
+CRITERIO: Compartir vehiculo
+PRUEBA:
+Entrar a detalle de vehiculo
+Click en boton "Compartir"
+Verificar alert "Link copiado al portapapeles"
+Pegar en otra ventana (Cmd+V)
+Verificar que es la URL del vehiculo
+RESULTADO: Paso
+NOTA: No se integro con redes sociales, solo copia URL
+
+HISTORIA 28: PUNTUAR PRODUCTO
+CRITERIO: Dejar reseña con estrellas
+PRUEBA:
+Iniciar sesion
+Entrar a detalle de vehiculo
+Scroll a seccion "Reseñas"
+Click en estrellas para dar puntuacion
+Escribir comentario
+Click "Enviar Reseña"
+Verificar que aparece en la lista
+Verificar que se actualiza el promedio arriba
+RESULTADO: Paso
+
+HISTORIA 29: ELIMINAR CATEGORIAS
+CRITERIO: Ya implementado en Sprint 2
+RESULTADO: Paso (ver Sprint 2)
+
+RESUMEN SPRINT 3
+Total historias: 8
 Implementadas: 8
-No implementadas: 1 (Historia 19)
 Pasaron: 8
 Fallaron: 0
 
 RESUMEN TOTAL
 Sprint 1: 11/11
-Sprint 2: 8/9
+Sprint 2: 9/9
+Sprint 3: 8/8
+Total: 28/28 historias completadas
