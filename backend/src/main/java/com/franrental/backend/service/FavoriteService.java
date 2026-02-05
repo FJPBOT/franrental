@@ -34,13 +34,13 @@ public class FavoriteService {
 
     public FavoriteResponseDTO addFavorite(Long userId, Long vehicleId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
 
         Vehicle vehicle = vehicleRepository.findById(vehicleId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vehicle not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vehiculo no encontrado"));
 
         if (favoriteRepository.findByUserIdAndVehicleId(userId, vehicleId).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Favorite already exists");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El favorito ya existe");
         }
 
         Favorite favorite = new Favorite();
@@ -60,7 +60,7 @@ public class FavoriteService {
     @Transactional
     public void removeFavorite(Long userId, Long vehicleId) {
         if (!favoriteRepository.findByUserIdAndVehicleId(userId, vehicleId).isPresent()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Favorite not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Favorito no encontrado");
         }
         favoriteRepository.deleteByUserIdAndVehicleId(userId, vehicleId);
     }

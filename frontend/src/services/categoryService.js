@@ -1,30 +1,28 @@
-import axios from 'axios';
-
-const API_URL = 'http://localhost:8080/api/categories';
+import api from './axiosConfig';
 
 const categoryService = {
   getAll: async () => {
-    const response = await axios.get(API_URL);
+    const response = await api.get('/categories');
     return response.data;
   },
 
   getById: async (id) => {
-    const response = await axios.get(`${API_URL}/${id}`);
+    const response = await api.get(`/categories/${id}`);
     return response.data;
   },
 
   create: async (categoryData) => {
-    const response = await axios.post(API_URL, categoryData);
+    const response = await api.post('/categories', categoryData);
     return response.data;
   },
 
   update: async (id, categoryData) => {
-    const response = await axios.put(`${API_URL}/${id}`, categoryData);
+    const response = await api.put(`/categories/${id}`, categoryData);
     return response.data;
   },
 
   delete: async (id) => {
-    await axios.delete(`${API_URL}/${id}`);
+    await api.delete(`/categories/${id}`);
   }
 };
 

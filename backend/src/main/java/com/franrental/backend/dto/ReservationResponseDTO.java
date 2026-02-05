@@ -16,5 +16,6 @@ public class ReservationResponseDTO {
     private String status;
     private Double totalPrice;
     private Integer totalDays;
+    private String comments;
     private String createdAt;
 }

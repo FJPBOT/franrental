@@ -1,20 +1,18 @@
-import axios from 'axios';
-
-const API_URL = 'http://localhost:8080/api/reviews';
+import api from './axiosConfig';
 
 const reviewService = {
   create: async (reviewData) => {
-    const response = await axios.post(API_URL, reviewData);
+    const response = await api.post('/reviews', reviewData);
     return response.data;
   },
 
   getByVehicle: async (vehicleId) => {
-    const response = await axios.get(`${API_URL}/vehicle/${vehicleId}`);
+    const response = await api.get(`/reviews/vehicle/${vehicleId}`);
     return response.data;
   },
 
   getStats: async (vehicleId) => {
-    const response = await axios.get(`${API_URL}/vehicle/${vehicleId}/stats`);
+    const response = await api.get(`/reviews/vehicle/${vehicleId}/stats`);
     return response.data;
   }
 };

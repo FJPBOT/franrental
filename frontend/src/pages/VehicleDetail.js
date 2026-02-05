@@ -40,18 +40,18 @@ function VehicleDetail() {
       setLoading(true);
       const vehicleData = await vehicleService.getById(vehicleId);
       setVehicle(vehicleData);
-      
+
       const reviewsData = await reviewService.getByVehicle(vehicleId);
       setReviews(reviewsData);
-      
+
       const statsData = await reviewService.getStats(vehicleId);
       setStats(statsData);
-      
+
       if (user) {
         const favoritesData = await favoriteService.getByUser(user.id);
         setIsFavorite(favoritesData.some(f => f.vehicle.id === parseInt(vehicleId)));
       }
-      
+
       setError(null);
     } catch (err) {
       setError('Vehiculo no encontrado');
@@ -82,7 +82,7 @@ function VehicleDetail() {
 
   const handleReviewSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!user) {
       alert('Debes iniciar sesion para dejar una reseña');
       return;
@@ -112,6 +112,12 @@ function VehicleDetail() {
     alert('Link copiado al portapapeles!');
   };
 
+  const handleWhatsApp = () => {
+    const message = `Hola! Estoy interesado en el vehiculo: ${vehicle.name}. Me gustaria obtener mas informacion. ${window.location.href}`;
+    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
   const handleBack = () => {
     navigate('/');
   };
@@ -134,19 +140,30 @@ function VehicleDetail() {
       <div className="detail-header">
         <h1>{vehicle.name}</h1>
         <div className="detail-actions">
-  <button onClick={() => navigate(`/reserve/${vehicleId}`)} className="btn-reserve-now">
-    Reservar Ahora
-  </button>
-  <button onClick={handleShare} className="btn-share">
-    Compartir
-  </button>
-  {user && (
-    <button onClick={handleFavoriteToggle} className="btn-favorite">
-      {isFavorite ? 'Favorito' : 'Agregar a Favoritos'}
-    </button>
-  )}
-  <button onClick={handleBack} className="btn-back">Volver</button>
-</div>
+          <button onClick={() => {
+            if (!user) {
+              navigate('/login', { state: { from: `/reserve/${vehicleId}`, message: 'Debes iniciar sesion para realizar una reserva. Si no tienes cuenta, registrate primero.' } });
+            } else {
+              navigate(`/reserve/${vehicleId}`);
+            }
+          }} className="btn-reserve-now">
+            Reservar Ahora
+          </button>
+          <button onClick={handleShare} className="btn-share">
+            Compartir
+          </button>
+          {user && (
+            <button onClick={handleWhatsApp} className="btn-whatsapp">
+              WhatsApp
+            </button>
+          )}
+          {user && (
+            <button onClick={handleFavoriteToggle} className="btn-favorite">
+              {isFavorite ? 'Favorito' : 'Agregar a Favoritos'}
+            </button>
+          )}
+          <button onClick={handleBack} className="btn-back">Volver</button>
+        </div>
       </div>
 
       <div className="rating-summary">
@@ -242,7 +259,7 @@ function VehicleDetail() {
 
       <div className="reviews-section">
         <h2>Reseñas de Clientes</h2>
-        
+
         {user && (
           <div className="review-form">
             <h3>Deja tu opinion</h3>

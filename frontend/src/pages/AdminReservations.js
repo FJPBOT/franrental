@@ -27,6 +27,11 @@ function AdminReservations() {
     }
   };
 
+  const formatDate = (dateString) => {
+    const [year, month, day] = dateString.split('-');
+    return new Date(year, month - 1, day).toLocaleDateString('es-ES');
+  };
+
   const handleStatusChange = async (id, newStatus) => {
     try {
       await reservationService.updateStatus(id, newStatus);
@@ -108,8 +113,8 @@ function AdminReservations() {
                   <td>{reservation.id}</td>
                   <td>{reservation.userName}</td>
                   <td>{reservation.vehicleName}</td>
-                  <td>{new Date(reservation.startDate).toLocaleDateString('es-ES')}</td>
-                  <td>{new Date(reservation.endDate).toLocaleDateString('es-ES')}</td>
+                  <td>{formatDate(reservation.startDate)}</td>
+                  <td>{formatDate(reservation.endDate)}</td>
                   <td>{reservation.totalDays}</td>
                   <td className="price">${reservation.totalPrice}</td>
                   <td>

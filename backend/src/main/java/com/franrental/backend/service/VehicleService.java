@@ -34,7 +34,7 @@ public class VehicleService {
 
     public VehicleResponseDTO create(CreateVehicleDTO dto) {
         if (vehicleRepository.existsByName(dto.getName())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Vehicle with this name already exists");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existe un vehiculo con este nombre");
         }
 
         Vehicle vehicle = new Vehicle();
@@ -44,7 +44,7 @@ public class VehicleService {
 
         if (dto.getCategoryId() != null) {
             Category category = categoryRepository.findById(dto.getCategoryId())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categoria no encontrada"));
             vehicle.setCategory(category);
         }
 
@@ -63,16 +63,16 @@ public class VehicleService {
 
     public VehicleResponseDTO findById(Long id) {
         Vehicle vehicle = vehicleRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vehicle not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vehiculo no encontrado"));
         return toResponseDTO(vehicle);
     }
 
     public VehicleResponseDTO update(Long id, CreateVehicleDTO dto) {
         Vehicle vehicle = vehicleRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vehicle not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vehiculo no encontrado"));
 
         if (!vehicle.getName().equals(dto.getName()) && vehicleRepository.existsByName(dto.getName())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Vehicle with this name already exists");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existe un vehiculo con este nombre");
         }
 
         vehicle.setName(dto.getName());
@@ -81,7 +81,7 @@ public class VehicleService {
 
         if (dto.getCategoryId() != null) {
             Category category = categoryRepository.findById(dto.getCategoryId())
-                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categoria no encontrada"));
             vehicle.setCategory(category);
         } else {
             vehicle.setCategory(null);
@@ -100,7 +100,7 @@ public class VehicleService {
 
     public void delete(Long id) {
         if (!vehicleRepository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Vehicle not found");
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Vehiculo no encontrado");
         }
         vehicleRepository.deleteById(id);
     }

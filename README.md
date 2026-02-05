@@ -8,6 +8,7 @@ REQUISITOS:
 ~ Java 17+
 ~ Node.js 16+
 ~ npm
+~ Cuenta Gmail con contraseña de aplicacion (opcional, para envio de emails)
 
 EJECUTAR:
 
@@ -19,6 +20,12 @@ Frontend:
 cd frontend
 npm install
 npm start
+
+Email (opcional):
+Para que se envien emails de confirmacion de reserva, configurar variables de entorno antes de iniciar el backend:
+export MAIL_USERNAME=tu_email@gmail.com
+export MAIL_PASSWORD=tu_contraseña_de_aplicacion
+La contraseña de aplicacion se genera en Google Account > Seguridad > Verificacion en 2 pasos > Contraseñas de aplicaciones
 
 BROWSER: http://localhost:3000
 
@@ -43,10 +50,15 @@ Usuario:
 ~ Ver detalle con caracteristicas y politicas
 ~ Registrarse e iniciar sesion
 ~ Agregar vehiculos a favoritos
-~ Hacer reservaciones
+~ Hacer reservaciones con verificacion de login
+~ Ver resumen de reserva con datos de usuario
+~ Agregar comentarios a la reserva
+~ Pagina de confirmacion de reserva exitosa
+~ Recibir email de confirmacion de reserva
 ~ Ver mis reservas
 ~ Dejar resenias con puntuacion de estrellas
 ~ Compartir vehiculo (copiar link)
+~ Contactar por WhatsApp
 
 Administrador:
 ~ Panel de administracion

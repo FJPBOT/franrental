@@ -1,12 +1,15 @@
 import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import userService from '../services/userService';
 import './Login.css';
 
 function Login() {
   const navigate = useNavigate();
+  const location = useLocation();
   const { login } = useContext(AuthContext);
+  const redirectTo = location.state?.from || '/';
+  const loginMessage = location.state?.message || null;
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -101,7 +104,7 @@ function Login() {
     try {
       const userData = await userService.login(formData);
       login(userData);
-      navigate('/');
+      navigate(redirectTo);
     } catch (err) {
       if (err.response && err.response.status === 401) {
         setError('Email o contraseña incorrectos');
@@ -120,6 +123,12 @@ function Login() {
       <div className="login-card">
         <h1>Iniciar Sesion</h1>
         <p className="login-subtitle">Bienvenido de nuevo a FranRental</p>
+
+        {loginMessage && (
+          <div className="alert alert-info">
+            {loginMessage}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">

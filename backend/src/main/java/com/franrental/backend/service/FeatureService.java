@@ -23,7 +23,7 @@ public class FeatureService {
 
     public FeatureResponseDTO create(CreateFeatureDTO dto) {
         if (featureRepository.existsByName(dto.getName())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Feature name already exists");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existe una caracteristica con este nombre");
         }
 
         Feature feature = new Feature();
@@ -42,17 +42,17 @@ public class FeatureService {
 
     public FeatureResponseDTO findById(Long id) {
         Feature feature = featureRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Feature not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Caracteristica no encontrada"));
         return toResponseDTO(feature);
     }
 
     public FeatureResponseDTO update(Long id, UpdateFeatureDTO dto) {
         Feature feature = featureRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Feature not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Caracteristica no encontrada"));
 
         if (dto.getName() != null && !dto.getName().equals(feature.getName())) {
             if (featureRepository.existsByName(dto.getName())) {
-                throw new ResponseStatusException(HttpStatus.CONFLICT, "Feature name already exists");
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existe una caracteristica con este nombre");
             }
             feature.setName(dto.getName());
         }
@@ -67,10 +67,10 @@ public class FeatureService {
 
     public void delete(Long id) {
         Feature feature = featureRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Feature not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Caracteristica no encontrada"));
 
         if (!feature.getVehicles().isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Cannot delete feature with vehicles");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "No se puede eliminar una caracteristica con vehiculos asignados");
         }
 
         featureRepository.deleteById(id);

@@ -19,11 +19,18 @@ function ReserveVehicle() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [totalPrice, setTotalPrice] = useState(0);
+  const [comments, setComments] = useState('');
+  const [reservationSuccess, setReservationSuccess] = useState(false);
+  const [createdReservation, setCreatedReservation] = useState(null);
   const DAILY_RATE = 50;
 
   useEffect(() => {
+    if (!user) {
+      navigate('/login', { state: { from: `/reserve/${vehicleId}`, message: 'Debes iniciar sesion para realizar una reserva. Si no tienes cuenta, registrate primero.' } });
+      return;
+    }
     loadData();
-  }, [vehicleId]);
+  }, [vehicleId, user]);
 
   useEffect(() => {
     if (startDate && endDate) {
@@ -36,10 +43,10 @@ function ReserveVehicle() {
       setLoading(true);
       const vehicleData = await vehicleService.getById(vehicleId);
       setVehicle(vehicleData);
-      
+
       const unavailable = await reservationService.getUnavailableDates(vehicleId);
       setUnavailableDates(unavailable.map(date => new Date(date)));
-      
+
       setError(null);
     } catch (err) {
       setError('Error al cargar el vehiculo');
@@ -63,12 +70,6 @@ function ReserveVehicle() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!user) {
-      alert('Debes iniciar sesion para hacer una reserva');
-      navigate('/login');
-      return;
-    }
-
     if (!startDate || !endDate) {
       setError('Selecciona las fechas de inicio y fin');
       return;
@@ -88,15 +89,16 @@ function ReserveVehicle() {
     setError(null);
 
     try {
-      await reservationService.create({
+      const reservation = await reservationService.create({
         userId: user.id,
         vehicleId: parseInt(vehicleId),
         startDate: startDate.toISOString().split('T')[0],
-        endDate: endDate.toISOString().split('T')[0]
+        endDate: endDate.toISOString().split('T')[0],
+        comments: comments || null
       });
-      
-      alert('Reserva creada exitosamente!');
-      navigate('/my-reservations');
+
+      setCreatedReservation(reservation);
+      setReservationSuccess(true);
     } catch (err) {
       if (err.response && err.response.status === 409) {
         setError('El vehiculo no esta disponible para las fechas seleccionadas');
@@ -123,6 +125,52 @@ function ReserveVehicle() {
     );
   }
 
+  if (reservationSuccess) {
+    return (
+      <div className="reserve-container">
+        <div className="success-container">
+          <div className="success-icon">✓</div>
+          <h1>Reserva Confirmada</h1>
+          <p>Tu reserva se ha realizado con exito</p>
+
+          <div className="success-details">
+            <div className="detail-row">
+              <span>Vehiculo:</span>
+              <span>{vehicle.name}</span>
+            </div>
+            <div className="detail-row">
+              <span>Fecha de inicio:</span>
+              <span>{startDate.toLocaleDateString('es-ES')}</span>
+            </div>
+            <div className="detail-row">
+              <span>Fecha de fin:</span>
+              <span>{endDate.toLocaleDateString('es-ES')}</span>
+            </div>
+            <div className="detail-row">
+              <span>Total:</span>
+              <span>${totalPrice}</span>
+            </div>
+            {comments && (
+              <div className="detail-row">
+                <span>Comentarios:</span>
+                <span>{comments}</span>
+              </div>
+            )}
+          </div>
+
+          <div className="success-actions">
+            <button onClick={() => navigate('/my-reservations')} className="btn-primary">
+              Ver Mis Reservas
+            </button>
+            <button onClick={() => navigate('/')} className="btn-secondary">
+              Volver al Inicio
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="reserve-container">
       <div className="reserve-header">
@@ -143,6 +191,20 @@ function ReserveVehicle() {
         </div>
 
         <div className="reservation-form">
+          <div className="user-info-section">
+            <h3>Datos del Usuario</h3>
+            <div className="user-info">
+              <div className="info-row">
+                <span>Nombre:</span>
+                <span>{user.name} {user.lastName}</span>
+              </div>
+              <div className="info-row">
+                <span>Email:</span>
+                <span>{user.email}</span>
+              </div>
+            </div>
+          </div>
+
           <form onSubmit={handleSubmit}>
             <div className="date-selectors">
               <div className="form-group">
@@ -180,6 +242,24 @@ function ReserveVehicle() {
                   required
                 />
               </div>
+            </div>
+
+            {startDate && endDate && (
+              <div className="selected-dates">
+                <p>Periodo seleccionado: {startDate.toLocaleDateString('es-ES')} - {endDate.toLocaleDateString('es-ES')}</p>
+              </div>
+            )}
+
+            <div className="form-group">
+              <label>Comentarios o notas (opcional)</label>
+              <textarea
+                value={comments}
+                onChange={(e) => setComments(e.target.value)}
+                placeholder="Agrega cualquier comentario o solicitud especial..."
+                rows="3"
+                maxLength="500"
+                className="comments-input"
+              />
             </div>
 
             {startDate && endDate && (

@@ -74,6 +74,14 @@
   border-left: 4px solid #E74C3C;
 }
 
+.alert-info {
+  background-color: #D4E6F1;
+  color: #1A5276;
+  border-left: 4px solid #3498DB;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
 .form-actions {
   display: flex;
   gap: 15px;

@@ -6,7 +6,8 @@ Sistema web para alquiler y gestion de vehiculos
 SOLUCION
 
 La aplicacion tiene dos partes:
-Backend: API REST hecha con Spring Boot que maneja los vehiculos en una base de datos H2Frontend: Interfaz web hecha con React que consume la API
+Backend: API REST hecha con Spring Boot que maneja los vehiculos en una base de datos H2
+Frontend: Interfaz web hecha con React que consume la API
 
 DECISIONES TECNICAS
 
@@ -135,3 +136,86 @@ TIEMPO INVERTIDO
 ~ Integracion y pruebas: 5 horas
 ~ Total Sprint 3: 24 horas
 ~ Total proyecto: 82 horas
+
+SPRINT 4
+
+NUEVAS FUNCIONALIDADES
+
+A. Mejoras en Reservacion
+~ Verificacion de login antes de permitir reservar
+~ Redireccion a login con mensaje informativo si no esta logueado
+~ Muestra datos del usuario en el formulario de reserva (nombre, email)
+~ Campo de comentarios opcional para la reserva
+~ Pagina de confirmacion de exito con resumen completo
+
+B. Contacto por WhatsApp
+~ Boton de WhatsApp en detalle del vehiculo
+~ Abre WhatsApp con mensaje pre-armado
+~ Incluye nombre del vehiculo y link de la pagina
+
+C. Notificacion por Email
+~ Envio automatico de email al confirmar reserva
+~ Email incluye detalles: vehiculo, fechas, precio total
+~ Envio asincrono para no bloquear la respuesta
+
+DECISIONES TECNICAS
+
+A. Backend
+~ Spring Boot Starter Mail para envio de emails
+~ @Async para envio asincrono de emails
+~ Variables de entorno para credenciales de email (MAIL_USERNAME, MAIL_PASSWORD)
+~ Configuracion SMTP para Gmail con TLS
+
+B. Frontend
+~ Uso de useLocation para recibir mensajes de redireccion
+~ Estado reservationSuccess para mostrar pagina de confirmacion
+~ window.open con URL de WhatsApp API
+
+PROBLEMAS ENCONTRADOS
+
+~ Para enviar emails reales se necesita una cuenta Gmail con contraseña de aplicacion
+~ Si no se configuran las variables de entorno, el email no se envia pero la reserva funciona igual
+
+TIEMPO INVERTIDO
+
+~ Backend Sprint 4: 3 horas
+~ Frontend Sprint 4: 4 horas
+~ Total Sprint 4: 7 horas
+~ Total proyecto: 89 horas
+
+CORRECCIONES POST-FEEDBACK SPRINT 3
+
+A. Seguridad Backend (JWT)
+~ Implementacion de autenticacion con JSON Web Tokens (JWT)
+~ Filtro JwtAuthenticationFilter para validar tokens en cada request
+~ Proteccion de endpoints por roles (ADMIN para operaciones de escritura)
+~ Token generado en login y registro, enviado al frontend
+~ Dependencias jjwt agregadas al proyecto
+
+B. Manejo Centralizado de Excepciones
+~ GlobalExceptionHandler con @RestControllerAdvice
+~ Manejo de ResponseStatusException, validaciones y errores genericos
+~ Respuestas de error estandarizadas con timestamp, status y mensaje
+
+C. Correcciones de Bugs
+~ Fix desfasaje de fechas en reservas (timezone UTC vs local)
+~ Campo comentarios ahora se persiste en la base de datos
+~ Boton WhatsApp solo visible para usuarios autenticados
+
+D. Frontend
+~ Interceptor de Axios para enviar token automaticamente en headers
+~ AuthContext guarda token ademas de datos de usuario
+~ Todos los servicios migrados a usar el interceptor centralizado
+
+DECISIONES TECNICAS
+
+~ JWT con expiracion de 24 horas
+~ Secret key de 256 bits para firma HMAC
+~ Rutas publicas: GET de vehiculos, categorias, features, reviews
+~ Rutas protegidas (USER): reservas, favoritos, reviews POST
+~ Rutas protegidas (ADMIN): CRUD completo, gestion de usuarios
+
+TIEMPO INVERTIDO
+
+~ Correcciones post-feedback: 4 horas
+~ Total proyecto: 93 horas

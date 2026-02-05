@@ -200,12 +200,163 @@
   padding: 60px 20px;
 }
 
+.success-container {
+  text-align: center;
+  padding: 40px;
+  background-color: #FFFFFF;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  background-color: #27AE60;
+  color: #FFFFFF;
+  font-size: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.success-container h1 {
+  color: #2C3E50;
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.success-container p {
+  color: #7F8C8D;
+  font-size: 16px;
+  margin-bottom: 30px;
+}
+
+.success-details {
+  background-color: #ECF0F1;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #BDC3C7;
+  color: #2C3E50;
+  font-size: 14px;
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-row span:first-child {
+  font-weight: 600;
+}
+
+.success-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.user-info-section {
+  margin-bottom: 25px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #ECF0F1;
+}
+
+.user-info-section h3 {
+  color: #2C3E50;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.user-info {
+  background-color: #ECF0F1;
+  padding: 15px;
+  border-radius: 5px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  color: #2C3E50;
+  font-size: 14px;
+}
+
+.info-row span:first-child {
+  font-weight: 600;
+}
+
+.comments-input {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #BDC3C7;
+  border-radius: 5px;
+  font-size: 14px;
+  font-family: inherit;
+  resize: vertical;
+  transition: border-color 0.3s;
+}
+
+.comments-input:focus {
+  outline: none;
+  border-color: #3498DB;
+}
+
+.selected-dates {
+  background-color: #D4E6F1;
+  padding: 12px 15px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  color: #1A5276;
+  font-size: 14px;
+  text-align: center;
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: #7F8C8D;
+  border: 2px solid #BDC3C7;
+  padding: 12px 30px;
+  border-radius: 5px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+  border-color: #7F8C8D;
+  color: #2C3E50;
+}
+
 @media (max-width: 768px) {
   .reserve-content {
     grid-template-columns: 1fr;
   }
-  
+
   .date-selectors {
     grid-template-columns: 1fr;
+  }
+
+  .success-container {
+    padding: 30px 20px;
+  }
+
+  .success-actions {
+    flex-direction: column;
+  }
+
+  .success-actions button {
+    width: 100%;
   }
 }

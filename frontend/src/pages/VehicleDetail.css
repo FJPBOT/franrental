@@ -393,23 +393,7 @@
   cursor: not-allowed;
 }
 
-@media (max-width: 768px) {
-  .policies-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .detail-actions {
-    flex-direction: column;
-    width: 100%;
-  }
-  
-  .btn-share,
-  .btn-favorite,
-  .btn-back {
-    width: 100%;
-  }
-
-  .btn-reserve-now {
+.btn-reserve-now {
   background-color: #27AE60;
   color: #FFFFFF;
   border: none;
@@ -424,4 +408,38 @@
 .btn-reserve-now:hover {
   background-color: #229954;
 }
+
+.btn-whatsapp {
+  background-color: #25D366;
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-whatsapp:hover {
+  background-color: #128C7E;
+}
+
+@media (max-width: 768px) {
+  .policies-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-share,
+  .btn-favorite,
+  .btn-back,
+  .btn-reserve-now,
+  .btn-whatsapp {
+    width: 100%;
+  }
 }

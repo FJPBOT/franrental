@@ -23,7 +23,7 @@ public class CategoryService {
 
     public CategoryResponseDTO create(CreateCategoryDTO dto) {
         if (categoryRepository.existsByTitle(dto.getTitle())) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Category title already exists");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existe una categoria con este titulo");
         }
 
         Category category = new Category();
@@ -43,17 +43,17 @@ public class CategoryService {
 
     public CategoryResponseDTO findById(Long id) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categoria no encontrada"));
         return toResponseDTO(category);
     }
 
     public CategoryResponseDTO update(Long id, UpdateCategoryDTO dto) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categoria no encontrada"));
 
         if (dto.getTitle() != null && !dto.getTitle().equals(category.getTitle())) {
             if (categoryRepository.existsByTitle(dto.getTitle())) {
-                throw new ResponseStatusException(HttpStatus.CONFLICT, "Category title already exists");
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Ya existe una categoria con este titulo");
             }
             category.setTitle(dto.getTitle());
         }
@@ -72,10 +72,10 @@ public class CategoryService {
 
     public void delete(Long id) {
         Category category = categoryRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categoria no encontrada"));
 
         if (!category.getVehicles().isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Cannot delete category with vehicles");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "No se puede eliminar una categoria con vehiculos asignados");
         }
 
         categoryRepository.deleteById(id);

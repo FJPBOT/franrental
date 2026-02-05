@@ -34,6 +34,9 @@ public class Reservation {
     @Column(nullable = false)
     private Double totalPrice;
 
+    @Column(length = 500)
+    private String comments;
+
     @Column(nullable = false)
     private LocalDateTime createdAt;
 

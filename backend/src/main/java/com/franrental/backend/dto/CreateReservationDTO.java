@@ -1,6 +1,7 @@
 package com.franrental.backend.dto;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 import java.time.LocalDate;
 
@@ -18,4 +19,7 @@ public class CreateReservationDTO {
 
     @NotNull(message = "End date is required")
     private LocalDate endDate;
+
+    @Size(max = 500, message = "Comments cannot exceed 500 characters")
+    private String comments;
 }

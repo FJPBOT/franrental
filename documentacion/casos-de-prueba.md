@@ -360,8 +360,99 @@ Implementadas: 8
 Pasaron: 8
 Fallaron: 0
 
+SPRINT 4
+
+HISTORIA 33: VERIFICACION DE LOGIN Y DATOS DE USUARIO EN RESERVA
+CRITERIO: Usuario debe estar logueado para reservar y ver sus datos en el formulario
+PRUEBA:
+Cerrar sesion si esta logueado
+Ir a detalle de un vehiculo
+Click en "Reservar Ahora"
+Verificar que redirige a /login
+Verificar mensaje "Debes iniciar sesion para realizar una reserva"
+Iniciar sesion
+Verificar que redirige a la pagina de reserva
+Verificar que muestra nombre y email del usuario
+Verificar campo de comentarios opcional
+RESULTADO: Paso
+
+HISTORIA 34: BOTON WHATSAPP
+CRITERIO: Poder contactar por WhatsApp desde el detalle del vehiculo (solo usuarios autenticados)
+PRUEBA:
+Iniciar sesion
+Ir a detalle de un vehiculo
+Verificar que el boton "WhatsApp" esta visible
+Click en el boton
+Verificar que abre WhatsApp (web o app)
+Verificar que el mensaje incluye nombre del vehiculo
+Verificar que el mensaje incluye link de la pagina
+RESULTADO: Paso
+
+PRUEBA SIN AUTENTICACION:
+Cerrar sesion
+Ir a detalle de un vehiculo
+Verificar que el boton "WhatsApp" NO esta visible
+RESULTADO: Paso
+
+HISTORIA 35: NOTIFICACION POR EMAIL
+CRITERIO: Recibir email de confirmacion al hacer una reserva
+PRUEBA:
+Configurar variables de entorno MAIL_USERNAME y MAIL_PASSWORD
+Reiniciar backend
+Iniciar sesion con usuario que tenga email real
+Hacer una reserva completa
+Verificar pagina de confirmacion exitosa
+Revisar bandeja de entrada del email
+Verificar email de FranRental con detalles de la reserva
+RESULTADO: Paso
+NOTA: Requiere configurar credenciales de Gmail. Sin configuracion, la reserva funciona pero no envia email
+
+HISTORIA 36: SEGURIDAD JWT
+CRITERIO: Los endpoints protegidos requieren token valido
+PRUEBA:
+Cerrar sesion (limpiar token)
+Intentar crear un vehiculo desde /admin/add
+Verificar que el backend devuelve error 401 o 403
+Iniciar sesion como ADMIN
+Verificar que ahora puede crear vehiculos
+RESULTADO: Paso
+
+PRUEBA DE ROLES:
+Iniciar sesion como USER (no admin)
+Intentar acceder a /admin
+Verificar que no puede crear/editar/eliminar vehiculos
+RESULTADO: Paso
+
+HISTORIA 37: COMENTARIOS EN RESERVA PERSISTIDOS
+CRITERIO: Los comentarios de la reserva se guardan en la base de datos
+PRUEBA:
+Iniciar sesion
+Ir a reservar un vehiculo
+Agregar comentario "Necesito silla para bebe"
+Confirmar reserva
+Ir a "Mis Reservas"
+Verificar que el comentario aparece en la reserva
+RESULTADO: Paso
+
+HISTORIA 38: FECHAS SIN DESFASAJE
+CRITERIO: Las fechas de reserva se muestran correctamente
+PRUEBA:
+Crear una reserva para el 15 de febrero
+Ir a "Mis Reservas"
+Verificar que muestra "15/02" (no 14/02)
+Ir a panel admin de reservas
+Verificar que muestra la misma fecha correcta
+RESULTADO: Paso
+
+RESUMEN SPRINT 4
+Total historias: 6
+Implementadas: 6
+Pasaron: 6
+Fallaron: 0
+
 RESUMEN TOTAL
 Sprint 1: 11/11
 Sprint 2: 9/9
 Sprint 3: 8/8
-Total: 28/28 historias completadas
+Sprint 4: 6/6
+Total: 34/34 historias completadas

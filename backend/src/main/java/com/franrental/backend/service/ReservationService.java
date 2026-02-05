@@ -24,29 +24,32 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final UserRepository userRepository;
     private final VehicleRepository vehicleRepository;
+    private final EmailService emailService;
     private static final double DAILY_RATE = 50.0;
 
     public ReservationService(ReservationRepository reservationRepository,
                               UserRepository userRepository,
-                              VehicleRepository vehicleRepository) {
+                              VehicleRepository vehicleRepository,
+                              EmailService emailService) {
         this.reservationRepository = reservationRepository;
         this.userRepository = userRepository;
         this.vehicleRepository = vehicleRepository;
+        this.emailService = emailService;
     }
 
     public ReservationResponseDTO create(CreateReservationDTO dto) {
         User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado"));
 
         Vehicle vehicle = vehicleRepository.findById(dto.getVehicleId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vehicle not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Vehiculo no encontrado"));
 
         if (dto.getStartDate().isBefore(LocalDate.now())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Start date cannot be in the past");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La fecha de inicio no puede ser en el pasado");
         }
 
         if (dto.getEndDate().isBefore(dto.getStartDate())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "End date must be after start date");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "La fecha de fin debe ser posterior a la fecha de inicio");
         }
 
         List<Reservation> conflicts = reservationRepository.findConflictingReservations(
@@ -54,7 +57,7 @@ public class ReservationService {
         );
 
         if (!conflicts.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Vehicle not available for selected dates");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "El vehiculo no esta disponible para las fechas seleccionadas");
         }
 
         long days = ChronoUnit.DAYS.between(dto.getStartDate(), dto.getEndDate()) + 1;
@@ -67,8 +70,10 @@ public class ReservationService {
         reservation.setEndDate(dto.getEndDate());
         reservation.setStatus("CONFIRMED");
         reservation.setTotalPrice(totalPrice);
+        reservation.setComments(dto.getComments());
 
         Reservation saved = reservationRepository.save(reservation);
+        emailService.sendReservationConfirmation(saved);
         return toResponseDTO(saved);
     }
 
@@ -92,7 +97,7 @@ public class ReservationService {
 
     public ReservationResponseDTO updateStatus(Long id, String status) {
         Reservation reservation = reservationRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reservation not found"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Reserva no encontrada"));
 
         reservation.setStatus(status);
         Reservation updated = reservationRepository.save(reservation);
@@ -119,6 +124,7 @@ public class ReservationService {
         dto.setEndDate(reservation.getEndDate());
         dto.setStatus(reservation.getStatus());
         dto.setTotalPrice(reservation.getTotalPrice());
+        dto.setComments(reservation.getComments());
 
         long days = ChronoUnit.DAYS.between(reservation.getStartDate(), reservation.getEndDate()) + 1;
         dto.setTotalDays((int) days);

@@ -28,6 +28,11 @@ function MyReservations() {
     }
   };
 
+  const formatDate = (dateString) => {
+    const [year, month, day] = dateString.split('-');
+    return new Date(year, month - 1, day).toLocaleDateString('es-ES');
+  };
+
   const getStatusBadgeClass = (status) => {
     switch (status) {
       case 'CONFIRMED':
@@ -94,12 +99,12 @@ function MyReservations() {
                   <div className="no-image">Sin imagen</div>
                 )}
               </div>
-              
+
               <div className="reservation-details">
                 <h3>{reservation.vehicleName}</h3>
                 <div className="reservation-dates">
-                  <span>Desde: {new Date(reservation.startDate).toLocaleDateString('es-ES')}</span>
-                  <span>Hasta: {new Date(reservation.endDate).toLocaleDateString('es-ES')}</span>
+                  <span>Desde: {formatDate(reservation.startDate)}</span>
+                  <span>Hasta: {formatDate(reservation.endDate)}</span>
                 </div>
                 <div className="reservation-info">
                   <span>{reservation.totalDays} dias</span>

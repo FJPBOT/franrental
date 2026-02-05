@@ -1,30 +1,28 @@
-import axios from 'axios';
-
-const API_URL = 'http://localhost:8080/api/features';
+import api from './axiosConfig';
 
 const featureService = {
   getAll: async () => {
-    const response = await axios.get(API_URL);
+    const response = await api.get('/features');
     return response.data;
   },
 
   getById: async (id) => {
-    const response = await axios.get(`${API_URL}/${id}`);
+    const response = await api.get(`/features/${id}`);
     return response.data;
   },
 
   create: async (featureData) => {
-    const response = await axios.post(API_URL, featureData);
+    const response = await api.post('/features', featureData);
     return response.data;
   },
 
   update: async (id, featureData) => {
-    const response = await axios.put(`${API_URL}/${id}`, featureData);
+    const response = await api.put(`/features/${id}`, featureData);
     return response.data;
   },
 
   delete: async (id) => {
-    await axios.delete(`${API_URL}/${id}`);
+    await api.delete(`/features/${id}`);
   }
 };
 
